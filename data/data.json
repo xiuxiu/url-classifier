@@ -1,0 +1,12 @@
+[
+  {
+    "instruction": "请判断以下URL是列表页还是详情页。",
+    "input": "https://example.com/products/category",
+    "output": "列表页 (List Page)"
+  },
+  {
+    "instruction": "请判断以下URL是列表页还是详情页。",
+    "input": "https://example.com/product/12345",
+    "output": "详情页 (Detail Page)"
+  }
+]
