@@ -141,4 +141,4 @@ model.save_pretrained('output/merged-model')
 
 ## License
 
-MIT
+[MIT License](LICENSE)
