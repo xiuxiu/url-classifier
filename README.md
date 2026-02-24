@@ -127,7 +127,21 @@ url-classifier/
 
 训练完成后，模型保存在 `output/checkpoint-300/` 目录。
 
-如需使用HuggingFace格式导出:
+### 🤗 HuggingFace 模型
+
+模型已上传至 HuggingFace，可直接下载使用：
+
+```bash
+# 方法1: 使用 git
+git lfs install
+git clone https://huggingface.co/windlx/url-classifier-model
+
+# 方法2: 使用 Python
+from transformers import AutoModelForCausalLM
+model = AutoModelForCausalLM.from_pretrained("windlx/url-classifier-model")
+```
+
+**HuggingFace 模型地址**: https://huggingface.co/windlx/url-classifier-model
 
 ```python
 from transformers import AutoModelForCausalLM
