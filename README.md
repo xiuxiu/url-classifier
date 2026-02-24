@@ -131,17 +131,22 @@ url-classifier/
 
 模型已上传至 HuggingFace，可直接下载使用：
 
+#### 方案1: 完整合并模型 (推荐)
 ```bash
-# 方法1: 使用 git
-git lfs install
-git clone https://huggingface.co/windlx/url-classifier-model
-
-# 方法2: 使用 Python
 from transformers import AutoModelForCausalLM
 model = AutoModelForCausalLM.from_pretrained("windlx/url-classifier-model")
 ```
+- 大小: ~3 GB
+- 地址: https://huggingface.co/windlx/url-classifier-model
 
-**HuggingFace 模型地址**: https://huggingface.co/windlx/url-classifier-model
+#### 方案2: 纯LoRA版本 (更小)
+```bash
+from peft import PeftModel
+base_model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen2.5-1.5B")
+model = PeftModel.from_pretrained(base_model, "windlx/url-classifier-lora")
+```
+- 大小: ~233 MB (LoRA: ~72 MB)
+- 地址: https://huggingface.co/windlx/url-classifier-lora
 
 ```python
 from transformers import AutoModelForCausalLM
