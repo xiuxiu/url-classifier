@@ -1,6 +1,7 @@
 """
 URL Page Type Classifier Inference
 使用Qwen2.5-1.5B + LoRA模型进行URL分类
+修复版：与训练时的 prompt 格式一致
 """
 
 import sys
@@ -31,18 +32,31 @@ def load_model(model_path=DEFAULT_MODEL_PATH, use_cpu=False):
     return model, tokenizer
 
 def classify_url(url, model, tokenizer):
-    """分类URL"""
-    prompt = f'''请判断以下URL是列表页还是详情页。
+    """分类URL - 使用与训练时一致的 prompt 格式"""
+    # 关键：使用与训练时一致的 prompt 格式
+    prompt = f'''<|im_start|>system
+You are a helpful assistant.<|im_end|>
+<|im_start|>user
+请判断以下URL是列表页还是详情页。
 
-URL: {url}
-类型: '''
+URL: {url}<|im_end|>
+<|im_start|>assistant
+'''
     
     inputs = tokenizer(prompt, return_tensors='pt').to(model.device if hasattr(model, 'device') else 'cpu')
     
     with torch.no_grad():
-        outputs = model.generate(**inputs, max_new_tokens=10, do_sample=False)
+        outputs = model.generate(
+            **inputs, 
+            max_new_tokens=20, 
+            do_sample=False,
+            pad_token_id=tokenizer.eos_token_id
+        )
     
-    response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    # 只取新生成的 token
+    input_len = inputs.input_ids.shape[1]
+    new_tokens = outputs[0][input_len:]
+    response = tokenizer.decode(new_tokens, skip_special_tokens=True)
     
     # 提取答案
     if 'Detail Page' in response or '详情页' in response:
@@ -50,7 +64,7 @@ URL: {url}
     elif 'List Page' in response or '列表页' in response:
         result = 'List Page (列表页)'
     else:
-        result = 'Unknown (未知)'
+        result = f'Unknown (未知) - {response[:50]}'
     
     return result
 
