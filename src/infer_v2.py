@@ -1,5 +1,5 @@
 """
-URL Page Type Classifier Inference
+URL Page Type Classifier Inference - 修复版
 使用Qwen2.5-1.5B + LoRA模型进行URL分类
 """
 
@@ -18,7 +18,7 @@ def load_model(model_path=DEFAULT_MODEL_PATH, use_cpu=False):
     device = 'cpu' if use_cpu else 'auto'
     dtype = torch.float32 if use_cpu else torch.float16
     
-    tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
+    tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True, pad_token='<|endoftext|>')
     model = AutoModelForCausalLM.from_pretrained(
         model_path,
         dtype=dtype,
@@ -37,12 +37,22 @@ def classify_url(url, model, tokenizer):
 URL: {url}
 类型: '''
     
-    inputs = tokenizer(prompt, return_tensors='pt').to(model.device if hasattr(model, 'device') else 'cpu')
+    # 修复: 正确处理 tokenization
+    inputs = tokenizer(prompt, return_tensors='pt', padding=True)
+    input_ids = inputs.input_ids.to(model.device if hasattr(model, 'device') else 'cpu')
+    attention_mask = inputs.attention_mask.to(model.device if hasattr(model, 'device') else 'cpu')
     
     with torch.no_grad():
-        outputs = model.generate(**inputs, max_new_tokens=10, do_sample=False)
+        outputs = model.generate(
+            input_ids=input_ids,
+            attention_mask=attention_mask,
+            max_new_tokens=20, 
+            do_sample=False,
+            pad_token_id=tokenizer.pad_token_id
+        )
     
-    response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    # 只取新生成的 token
+    response = tokenizer.decode(outputs[0][input_ids.shape[1]:], skip_special_tokens=True)
     
     # 提取答案
     if 'Detail Page' in response or '详情页' in response:
@@ -50,7 +60,7 @@ URL: {url}
     elif 'List Page' in response or '列表页' in response:
         result = 'List Page (列表页)'
     else:
-        result = 'Unknown (未知)'
+        result = f'Unknown (未知) - {response.strip()[:50]}'
     
     return result
 

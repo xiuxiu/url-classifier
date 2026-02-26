@@ -1,32 +1,35 @@
 """
-URL Page Type Classifier Inference
+URL Page Type Classifier Inference - 修复版v2
 使用Qwen2.5-1.5B + LoRA模型进行URL分类
+从HuggingFace加载模型
 """
 
-import sys
 import argparse
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 
-# 默认配置 - 从HuggingFace加载
 DEFAULT_MODEL_PATH = 'windlx/url-classifier-model'
 
 def load_model(model_path=DEFAULT_MODEL_PATH, use_cpu=False):
-    """加载模型 - 直接从HuggingFace获取"""
+    """加载模型"""
     print(f"Loading model from HuggingFace: {model_path}...")
     
-    device = 'cpu' if use_cpu else 'auto'
-    dtype = torch.float32 if use_cpu else torch.float16
-    
-    tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
-    model = AutoModelForCausalLM.from_pretrained(
-        model_path,
-        dtype=dtype,
-        device_map=device,
+    tokenizer = AutoTokenizer.from_pretrained(
+        model_path, 
         trust_remote_code=True
     )
-    model.eval()
     
+    # 关键修复: 不使用 device_map，直接指定 device
+    device = 'cpu' if use_cpu else 'cuda:0'
+    
+    model = AutoModelForCausalLM.from_pretrained(
+        model_path,
+        torch_dtype=torch.float32 if use_cpu else torch.float16,
+        device_map=device,
+        trust_remote_code=True,
+    )
+    
+    model.eval()
     print("Model loaded!")
     return model, tokenizer
 
@@ -37,12 +40,27 @@ def classify_url(url, model, tokenizer):
 URL: {url}
 类型: '''
     
-    inputs = tokenizer(prompt, return_tensors='pt').to(model.device if hasattr(model, 'device') else 'cpu')
+    # 关键修复: 禁用所有可能的 cache 机制
+    inputs = tokenizer(prompt, return_tensors="pt")
+    input_ids = inputs.input_ids.to(model.device)
+    attention_mask = inputs.attention_mask.to(model.device)
     
     with torch.no_grad():
-        outputs = model.generate(**inputs, max_new_tokens=10, do_sample=False)
+        # 禁用 cache，使用 static 模式
+        outputs = model.generate(
+            input_ids=input_ids,
+            attention_mask=attention_mask,
+            max_new_tokens=20,
+            do_sample=False,
+            use_cache=False,  # 关键修复
+            pad_token_id=tokenizer.eos_token_id,
+            eos_token_id=tokenizer.eos_token_id,
+        )
     
-    response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    # 只取新生成的 token
+    input_len = input_ids.shape[1]
+    new_tokens = outputs[0][input_len:]
+    response = tokenizer.decode(new_tokens, skip_special_tokens=True)
     
     # 提取答案
     if 'Detail Page' in response or '详情页' in response:
@@ -50,7 +68,7 @@ URL: {url}
     elif 'List Page' in response or '列表页' in response:
         result = 'List Page (列表页)'
     else:
-        result = 'Unknown (未知)'
+        result = f'Unknown - {response.strip()[:50]}'
     
     return result
 
