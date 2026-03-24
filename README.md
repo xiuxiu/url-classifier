@@ -37,9 +37,15 @@ conda activate url-classifier
 ### 2. Run inference
 
 ```bash
+# GPU (recommended, ~10ms per URL)
 python src/infer.py "https://example.com/product/12345"   # detail page
-python src/infer.py "https://example.com/search?q=foo"   # list page
+python src/infer.py "https://example.com/search?q=foo"    # list page
+
+# CPU (also works, ~60ms per URL)
+python src/infer.py "https://example.com/product/12345"
 ```
+
+> Auto-detects GPU/CPU. No GPU required.
 
 ### 3. Train (optional)
 

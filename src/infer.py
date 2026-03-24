@@ -296,8 +296,10 @@ def predict(url, model, tokenizer, device):
 
     x = torch.tensor([ids], dtype=torch.long, device=device)
     with torch.no_grad():
-        dtype = torch.float16 if device.type == "cuda" else torch.float32
-        with torch.amp.autocast(device.type if device.type == "cuda" else "cpu", dtype=dtype):
+        if device.type == "cuda":
+            with torch.amp.autocast("cuda", dtype=torch.float16):
+                out = model(x)
+        else:
             out = model(x)
 
     class_logits = out["class_logits"][0]
