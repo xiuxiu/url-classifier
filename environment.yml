@@ -1,0 +1,13 @@
+name: url-classifier
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+    - torch>=2.0
+    - tiktoken>=0.12
+    - numpy

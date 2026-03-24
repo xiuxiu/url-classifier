@@ -1,16 +1,51 @@
 # URL Classifier — Autoresearch
 
-Binary classifier (A=列表页 / B=详情页) built with the **Autoresearch** framework on top of a custom transformer.
+Binary classifier that predicts whether a URL is a **list page (A)** or a **detail page (B)**.
+
+Built with the **Autoresearch** framework — a custom transformer trained from scratch, not a LoRA fine-tune.
 
 ## Results
 
 | Metric | Value |
 |--------|-------|
-| **Accuracy** | 99.62% |
-| Dataset | iowacat (from url-classifier) |
-| Training time | 5 minutes (RTX 4060 Laptop) |
+| **Accuracy** | 99.88% |
+| Dataset | iowacat (from url-classifier project) |
+| Training time | 30 min (RTX 4060 Laptop) |
 | Final loss | ~0.002 |
 | Model params | ~161M |
+
+## Quick Start
+
+### 1. Install environment
+
+**macOS / Linux:**
+```bash
+bash setup.sh
+```
+
+**Windows:**
+```
+双击运行 setup.bat
+```
+
+Or manually:
+```bash
+conda env create -f environment.yml
+conda activate url-classifier
+```
+
+### 2. Run inference
+
+```bash
+python src/infer.py "https://example.com/product/12345"   # detail page
+python src/infer.py "https://example.com/search?q=foo"   # list page
+```
+
+### 3. Train (optional)
+
+```bash
+python src/train.py
+```
 
 ## Model Architecture
 
@@ -23,48 +58,28 @@ Binary classifier (A=列表页 / B=详情页) built with the **Autoresearch** fr
 | Vocab | 100,277 (cl100k_base) |
 | Max seq len | 64 |
 | Window pattern | SSSL |
-
-## Quick Start
-
-### Training
-
-```bash
-conda activate qwenfinetune
-cd url-classifier
-
-# Run training (5-30 min)
-python -m src.train
-```
-
-### Inference
-
-```python
-import torch
-from src.prepare import Tokenizer
-
-tokenizer = Tokenizer.from_directory()
-# Load checkpoint
-# (see configs/model_config.json for architecture details)
-```
+| Checkpoint | ~413 MB |
 
 ## Project Structure
 
 ```
 url-classifier/
-├── configs/
-│   └── model_config.json    # Model hyperparameters
-├── checkpoints/
-│   └── checkpoint_pre_eval.pt  # Trained weights (not in git)
 ├── src/
-│   ├── prepare.py           # Data loading + tiktoken tokenizer
-│   └── train.py             # Training script (autoresearch framework)
-├── model_card.md            # HuggingFace model card
+│   ├── prepare.py       # Data loading + tiktoken tokenizer
+│   ├── train.py         # Training script (autoresearch framework)
+│   └── infer.py         # Inference script
+├── configs/
+│   └── model_config.json   # Model hyperparameters
+├── environment.yml       # Conda environment spec
+├── setup.sh             # Linux/macOS install script
+├── setup.bat            # Windows install script
+├── model_card.md        # HuggingFace model card
 └── README.md
 ```
 
 ## Dataset
 
-Trained on `iowacat` from the [url-classifier](https://github.com/xiuxiu/url-classifier) project, which contains labeled URL pairs (A=列表页, B=详情页).
+Trained on `iowacat` from the [url-classifier](https://github.com/xiuxiu/url-classifier) project — labeled URL pairs (A=列表页, B=详情页).
 
 ## Citation
 
