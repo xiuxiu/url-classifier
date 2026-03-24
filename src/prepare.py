@@ -115,7 +115,10 @@ def _load_data(dataset=None):
 
 def _load_from_json():
     """Extract URLs and labels from train.json (conversation format)."""
-    path = "C:/Users/windlx/Projects/url-classifier/url-classifier/data/train.json"
+    # Auto-resolve: supports URL_DATA_PATH env var or default to data/urls_diverse_train.json
+    import os as _os
+    _proj = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
+    path = _os.environ.get("URL_DATA_PATH", _os.path.join(_proj, "data", "urls_diverse_train.json"))
     print(f"Reading: {path}")
 
     urls, labels = [], []
