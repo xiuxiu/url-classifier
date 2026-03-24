@@ -11,8 +11,7 @@ import sys
 
 _FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 _PROJ_DIR = os.path.dirname(_FILE_DIR)                          # url-classifier/
-_PARENT_DIR = os.path.dirname(_PROJ_DIR)                        # Projects/
-_CHECKPOINT = os.path.join(_PARENT_DIR, "url-autoresearch", "checkpoint_pre_eval.pt")
+_CHECKPOINT = os.path.join(_PROJ_DIR, "checkpoints", "checkpoint_pre_eval.pt")
 
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 

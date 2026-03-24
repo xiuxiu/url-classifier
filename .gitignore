@@ -15,6 +15,9 @@ env/
 *.pt
 *.safetensors
 
+# But checkpoints tracked by Git LFS are OK
+!checkpoints/*.pt
+
 # Cache
 .cache/
 *.pkl
