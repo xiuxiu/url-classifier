@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Model weights (too large for git)
+*.pt
+*.safetensors
+
+# Cache
+.cache/
+*.pkl
+*.sqlite
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Large data subdirs (not part of this repo)
+lora_clean/
+output/
+output_gpu/
+url-classifier-model-new/
+url-classifier-model/
+url-classifier/

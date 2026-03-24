@@ -1,0 +1,46 @@
+{
+  "model_name": "url-classifier",
+  "architecture": "autoresearch",
+  "version": "1.0.0",
+  "training_dataset": "iowacat",
+  "accuracy": 0.9962,
+  "final_loss": 0.002,
+  "training_seconds": 300.3,
+  "gpu": "RTX 4060 Laptop",
+
+  "model": {
+    "depth": 4,
+    "aspect_ratio": 96,
+    "head_dim": 128,
+    "model_dim": 384,
+    "n_head": 3,
+    "n_kv_head": 3,
+    "n_embd": 384,
+    "vocab_size": 100277,
+    "max_seq_len": 64,
+    "window_pattern": "SSSL",
+    "estimated_params": 161000000
+  },
+
+  "tokenizer": {
+    "name": "cl100k_base",
+    "library": "tiktoken",
+    "vocab_size": 100277,
+    "bos_id": 1,
+    "pad_id": 0
+  },
+
+  "training": {
+    "batch_size": 16,
+    "total_batch_size": 8192,
+    "grad_accum_steps": 512,
+    "time_budget_seconds": 300,
+    "lr": 1.0,
+    "optimizer": "muon + adamw"
+  },
+
+  "class_labels": {
+    "0": "A (列表页)",
+    "1": "B (详情页)"
+  }
+}
