@@ -20,8 +20,11 @@ env/
 
 # Cache
 .cache/
-*.pkl
 *.sqlite
+
+# Model files (except tracked ones)
+*.pkl
+!data/models/*.pkl
 
 # OS
 .DS_Store

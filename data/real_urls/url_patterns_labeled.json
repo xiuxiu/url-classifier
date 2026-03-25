@@ -1,0 +1,142 @@
+[
+  {
+    "text": "user\nURL:\n\nhttps://www.reddit.com/r/worldnews/hot/?t=day\n<|im_end|>\n<|im_start|>assistant\nA\n<|im_end|>",
+    "label": 0,
+    "label_str": "A",
+    "domain": "reddit.com",
+    "source": "pattern"
+  },
+  {
+    "text": "user\nURL:\n\nhttps://www.xiaohongshu.com/explore/65abc0096\n<|im_end|>\n<|im_start|>assistant\nB\n<|im_end|>",
+    "label": 1,
+    "label_str": "B",
+    "domain": "xiaohongshu.com",
+    "source": "pattern"
+  },
+  {
+    "text": "user\nURL:\n\nhttps://www.thepaper.cn/detail_38119557.jhtml\n<|im_end|>\n<|im_start|>assistant\nB\n<|im_end|>",
+    "label": 1,
+    "label_str": "B",
+    "domain": "thepaper.cn",
+    "source": "pattern"
+  },
+  {
+    "text": "user\nURL:\n\nhttps://www.zhipin.com/gongsi/340174.html\n<|im_end|>\n<|im_start|>assistant\nB\n<|im_end|>",
+    "label": 1,
+    "label_str": "B",
+    "domain": "zhipin.com",
+    "source": "pattern"
+  },
+  {
+    "text": "user\nURL:\n\nhttps://zhuanlan.zhihu.com/p/{id}\n<|im_end|>\n<|im_start|>assistant\nB\n<|im_end|>",
+    "label": 1,
+    "label_str": "B",
+    "domain": "zhihu.com",
+    "source": "pattern"
+  },
+  {
+    "text": "user\nURL:\n\nhttps://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/XMLHttpRequest\n<|im_end|>\n<|im_start|>assistant\nB\n<|im_end|>",
+    "label": 1,
+    "label_str": "B",
+    "domain": "developer.mozilla.org",
+    "source": "pattern"
+  },
+  {
+    "text": "user\nURL:\n\nhttps://a-cod49.jd.com/ai?_j=1&key=ai\n<|im_end|>\n<|im_start|>assistant\nA\n<|im_end|>",
+    "label": 0,
+    "label_str": "A",
+    "domain": "jd.com",
+    "source": "pattern"
+  },
+  {
+    "text": "user\nURL:\n\nhttps://www.bilibili.com/video/av91756179/\n<|im_end|>\n<|im_start|>assistant\nB\n<|im_end|>",
+    "label": 1,
+    "label_str": "B",
+    "domain": "bilibili.com",
+    "source": "pattern"
+  },
+  {
+    "text": "user\nURL:\n\nhttps://news.sina.com.cn/roll/\n<|im_end|>\n<|im_start|>assistant\nA\n<|im_end|>",
+    "label": 0,
+    "label_str": "A",
+    "domain": "sina.com.cn",
+    "source": "pattern"
+  },
+  {
+    "text": "user\nURL:\n\nhttps://github.com/search?q=book&type=repositories\n<|im_end|>\n<|im_start|>assistant\nA\n<|im_end|>",
+    "label": 0,
+    "label_str": "A",
+    "domain": "github.com",
+    "source": "pattern"
+  },
+  {
+    "text": "user\nURL:\n\nhttps://github.com/cloud_arch/docker/issues\n<|im_end|>\n<|im_start|>assistant\nB\n<|im_end|>",
+    "label": 1,
+    "label_str": "B",
+    "domain": "github.com",
+    "source": "pattern"
+  },
+  {
+    "text": "user\nURL:\n\nhttps://www.zhihu.com/search?type=content&q=book\n<|im_end|>\n<|im_start|>assistant\nA\n<|im_end|>",
+    "label": 0,
+    "label_str": "A",
+    "domain": "zhihu.com",
+    "source": "pattern"
+  },
+  {
+    "text": "user\nURL:\n\nhttps://www.quora.com/topics/{topic}/\n<|im_end|>\n<|im_start|>assistant\nA\n<|im_end|>",
+    "label": 0,
+    "label_str": "A",
+    "domain": "quora.com",
+    "source": "pattern"
+  },
+  {
+    "text": "user\nURL:\n\nhttps://www.amazon.com/stores/page/2?terms=javascript\n<|im_end|>\n<|im_start|>assistant\nA\n<|im_end|>",
+    "label": 0,
+    "label_str": "A",
+    "domain": "amazon.com",
+    "source": "pattern"
+  },
+  {
+    "text": "user\nURL:\n\nhttps://github.com/search?q=network&type=repositories\n<|im_end|>\n<|im_start|>assistant\nA\n<|im_end|>",
+    "label": 0,
+    "label_str": "A",
+    "domain": "github.com",
+    "source": "pattern"
+  },
+  {
+    "text": "user\nURL:\n\nhttps://www.amazon.com/gp/product/5LXO6QJIUJ\n<|im_end|>\n<|im_start|>assistant\nB\n<|im_end|>",
+    "label": 1,
+    "label_str": "B",
+    "domain": "amazon.com",
+    "source": "pattern"
+  },
+  {
+    "text": "user\nURL:\n\nhttps://www.reddit.com/user/ai_researcher\n<|im_end|>\n<|im_start|>assistant\nB\n<|im_end|>",
+    "label": 1,
+    "label_str": "B",
+    "domain": "reddit.com",
+    "source": "pattern"
+  },
+  {
+    "text": "user\nURL:\n\nhttps://www.amazon.com/Best-Sellers-camera-electronics/zgbs/camera\n<|im_end|>\n<|im_start|>assistant\nA\n<|im_end|>",
+    "label": 0,
+    "label_str": "A",
+    "domain": "amazon.com",
+    "source": "pattern"
+  },
+  {
+    "text": "user\nURL:\n\nhttps://www.zhihu.com/question/95899313\n<|im_end|>\n<|im_start|>assistant\nB\n<|im_end|>",
+    "label": 1,
+    "label_str": "B",
+    "domain": "zhihu.com",
+    "source": "pattern"
+  },
+  {
+    "text": "user\nURL:\n\nhttps://www.zhihu.com/follow\n<|im_end|>\n<|im_start|>assistant\nA\n<|im_end|>",
+    "label": 0,
+    "label_str": "A",
+    "domain": "zhihu.com",
+    "source": "pattern"
+  }
+]
